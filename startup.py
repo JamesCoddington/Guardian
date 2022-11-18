@@ -8,48 +8,53 @@ blacklist = []
 
 
 def monitor():
-    print("Now monitoring your nuts up close and personal")
+    print("Now monitoring your established connections")
+    while True:
+        for connection in psutil.net_connections():
+            # process contains the pid, name of the process, status, and when the process started
+            if connection.status == psutil._common.CONN_ESTABLISHED:
+                process = psutil.Process(connection.pid)
+                connections_list.add(process)
+                # print(process.exe())
 
-    for connection in psutil.net_connections():
-        process = psutil.Process(connection.pid)
-        # process contains the pid, name of the process, status, and when the process started
-        # process.exe() shows us the file location
-        if connection.status == psutil._common.CONN_ESTABLISHED:
-            connections_list.add(process.exe())
-            # print(process.exe())
+        for connection in connections_list:
+            whitelist_file = open("whitelist.json", "r")
+            whitelist = json.load(whitelist_file)
+            whitelist_file.close()
 
-    for connection in connections_list:
-        whitelist_file = open("whitelist.json", "r")
-        whitelist = json.load(whitelist_file)
-        whitelist_file.close()
+            if psutil.pid_exists(connection.pid):
+                if (
+                    connection.exe() in whitelist["paths"]
+                    or connection.exe() in blacklist
+                ):
+                    continue
 
-        if connection in whitelist["paths"] or connection in blacklist:
-            continue
+                while True:
+                    response = input(
+                        f"Would you like to whitelist {connection.name()}? [y/n]\n"
+                    )
 
-        while True:
-            response = input(f"Would you like to whitelist {connection}? [y/n]\n")
+                    if response.upper() == "Y":
+                        whitelist["paths"].append(connection.exe())
+                        whitelist_file = open("whitelist.json", "w")
+                        json.dump(whitelist, whitelist_file)
+                        whitelist_file.close()
+                        break
 
-            if response.upper() == "Y":
-                whitelist["paths"].append(connection)
-                whitelist_file = open("whitelist.json", "w")
-                json.dump(whitelist, whitelist_file)
-                whitelist_file.close()
-                break
-
-            elif response.upper() == "N":
-                blacklist.append(connection)
-                break
+                    elif response.upper() == "N":
+                        blacklist.append(connection.exe())
+                        break
 
 
 def user_input():
-    user = input("Would you like to start monitoring? 🤓 [y/n]\n")
+    user = input("Would you like to start monitoring? [y/n]\n")
     if user.upper() == "Y":
         monitor()
     elif user.upper() != "N":
-        print("Please type [y] for yes, or [n] for no 😡")
+        print("Please type [y] for yes, or [n] for no ")
         user_input()
     else:
-        print("Exiting this bitch 💀")
+        print("Exiting the program")
 
 
 user_input()
