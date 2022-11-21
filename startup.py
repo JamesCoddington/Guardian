@@ -13,6 +13,7 @@ if not isfile("blacklist_log.csv"):
     writer.writerow(["Application Name", "Application Path"])
     log.close()
 
+
 def monitor():
     print("Now monitoring your established connections")
     while True:
@@ -37,24 +38,27 @@ def monitor():
                     continue
 
                 while True:
-                    response = input(
-                        f"Would you like to whitelist {application_name}? [y/n]\n"
-                    )
+                    try:
+                        response = input(
+                            f"Would you like to whitelist {application_name}? [y/n]\n"
+                        )
 
-                    if response.upper() == "Y":
-                        status["whitelist"].append(application_path)
-                        status_file = open("status.json", "w")
-                        json.dump(status, status_file)
-                        status_file.close()
-                        break
+                        if response.upper() == "Y":
+                            status["whitelist"].append(application_path)
+                            status_file = open("status.json", "w")
+                            json.dump(status, status_file)
+                            status_file.close()
+                            break
 
-                    elif response.upper() == "N":
-                        status["blacklist"].append(application_path)
-                        status_file = open("status.json", "w")
-                        json.dump(status, status_file)
-                        status_file.close()
-                        output_log(application_name, application_path)
-                        break
+                        elif response.upper() == "N":
+                            status["blacklist"].append(application_path)
+                            status_file = open("status.json", "w")
+                            json.dump(status, status_file)
+                            status_file.close()
+                            output_log(application_name, application_path)
+                            break
+                    except PermissionError:
+                        print("Please close the csv file before answering No\n")
 
 
 def output_log(application_name, application_path):
