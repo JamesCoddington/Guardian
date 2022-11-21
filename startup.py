@@ -2,10 +2,16 @@
 from pprint import pprint
 import psutil
 import json
+import csv
+from os.path import isfile
 
 connections_list = set()
-blacklist = []
 
+if not isfile("blacklist_log.csv"):
+    log = open("blacklist_log.csv", "w")
+    writer = csv.writer(log)
+    writer.writerow(["Application Name", "Application Path"])
+    log.close()
 
 def monitor():
     print("Now monitoring your established connections")
@@ -15,35 +21,47 @@ def monitor():
             if connection.status == psutil._common.CONN_ESTABLISHED:
                 process = psutil.Process(connection.pid)
                 connections_list.add(process)
-                # print(process.exe())
 
         for connection in connections_list:
-            whitelist_file = open("whitelist.json", "r")
-            whitelist = json.load(whitelist_file)
-            whitelist_file.close()
+            status_file = open("status.json", "r")
+            status = json.load(status_file)
+            status_file.close()
+            application_name = connection.name()
+            application_path = connection.exe()
 
             if psutil.pid_exists(connection.pid):
                 if (
-                    connection.exe() in whitelist["paths"]
-                    or connection.exe() in blacklist
+                    application_path in status["whitelist"]
+                    or application_path in status["blacklist"]
                 ):
                     continue
 
                 while True:
                     response = input(
-                        f"Would you like to whitelist {connection.name()}? [y/n]\n"
+                        f"Would you like to whitelist {application_name}? [y/n]\n"
                     )
 
                     if response.upper() == "Y":
-                        whitelist["paths"].append(connection.exe())
-                        whitelist_file = open("whitelist.json", "w")
-                        json.dump(whitelist, whitelist_file)
-                        whitelist_file.close()
+                        status["whitelist"].append(application_path)
+                        status_file = open("status.json", "w")
+                        json.dump(status, status_file)
+                        status_file.close()
                         break
 
                     elif response.upper() == "N":
-                        blacklist.append(connection.exe())
+                        status["blacklist"].append(application_path)
+                        status_file = open("status.json", "w")
+                        json.dump(status, status_file)
+                        status_file.close()
+                        output_log(application_name, application_path)
                         break
+
+
+def output_log(application_name, application_path):
+    log = open("blacklist_log.csv", "a")
+    writer = csv.writer(log)
+    writer.writerow([application_name, application_path])
+    log.close()
 
 
 def user_input():
