@@ -1,0 +1,22 @@
+{
+  "name": "guardian",
+  "version": "1.0.0",
+  "description": "Port Checking App",
+  "main": "startup.py",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesCoddington/Guardian.git"
+  },
+  "author": "James Coddington, Viet Nihn, Ben Cook, Harry Do, Alex Schrier",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JamesCoddington/Guardian/issues"
+  },
+  "homepage": "https://github.com/JamesCoddington/Guardian#readme",
+  "dependencies": {
+    "python3": "^0.0.1"
+  }
+}

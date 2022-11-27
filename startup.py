@@ -1,11 +1,10 @@
-#! var/bin/python3
 import psutil
 import json
 import csv
 from os.path import isfile
 
 
-# Takes an input from the user on whether or not they want to start the program
+"""Takes an input from the user on whether or not they want to start the program"""
 def user_input():
     user = input("Would you like to start monitoring? [y/n]\n")
     if user.upper() == "Y":
@@ -17,9 +16,9 @@ def user_input():
         print("Exiting the program")
 
 
-# The main chunk of the application. This method monitors the established connections found within psutil.net_connections()
-# and checks if they are already blacklisted or whitelisted within the status.json file. If so, then the program will ignore it.
-# If not then the user is prompted with user_prompt().
+"""The main chunk of the application. This method monitors the established connections found within psutil.net_connections()
+and checks if they are already blacklisted or whitelisted within the status.json file. If so, then the program will ignore it.
+If not then the user is prompted with user_prompt()."""
 def monitor():
     print("Now monitoring your established connections")
     check_csv()
@@ -47,7 +46,7 @@ def monitor():
                 user_prompt(status, application_name, application_path)
 
 
-# Checks to see if the csv file already exists on the machine, if not create one for them.
+"""Checks to see if the csv file already exists on the machine, if not create one for them."""
 def check_csv():
     if not isfile("blacklist_log.csv"):
         log = open("blacklist_log.csv", "w")
@@ -56,7 +55,7 @@ def check_csv():
         log.close()
 
 
-# Prompts the user whether they want to blacklist or whitelist the application
+"""Prompts the user whether they want to blacklist or whitelist the application"""
 def user_prompt(status, application_name, application_path):
     while True:
         try:
@@ -80,7 +79,7 @@ def user_prompt(status, application_name, application_path):
             print("Please close the csv file before answering No\n")
 
 
-# Writes the application name and path to the end of the csv file.
+"""Writes the application name and path to the end of the csv file."""
 def output_log(application_name, application_path):
     log = open("blacklist_log.csv", "a")
     writer = csv.writer(log)
