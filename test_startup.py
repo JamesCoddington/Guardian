@@ -24,21 +24,22 @@ class TestStartup(unittest.TestCase):
 
   def test_user_prompt_yes(self):
     status = {"whitelist": [], "blacklist": []}
-    application_name = "test"
-    application_path = "test"
-    json.dump = MagicMock()
+    application_name = "test_yes"
+    application_path = "test_yes"
     self.guardian.get_input = MagicMock(return_value = "y")
-    self.guardian.output_log = MagicMock()
     self.guardian.user_prompt(status, application_name, application_path)
+    self.assertEqual(status["whitelist"], [application_path])
 
   def test_user_prompt_no(self):
     status = {"whitelist": [], "blacklist": []}
-    application_name = "test"
-    application_path = "test"
-    json.dump = MagicMock()
+    application_name = "test_no"
+    application_path = "test_no"
     self.guardian.get_input = MagicMock(return_value = "n")
     self.guardian.output_log = MagicMock()
+    csv.writer = MagicMock()
+    csv.writer.writerow = MagicMock()
     self.guardian.user_prompt(status, application_name, application_path)
+    self.assertEqual(status["blacklist"], [application_path])
 
   def test_check_csv(self):
     csv.writer = MagicMock()
