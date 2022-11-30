@@ -62,6 +62,12 @@ class Guardian():
             writer.writerow(["Application Name", "Application Path"])
             log.close()
 
+        if not isfile("status.json"):
+            data = {"whitelist": [], "blacklist": []}
+            status_file = open("status.json", "w")
+            json.dump(data, status_file)
+            status_file.close()
+
 
     """Prompts the user whether they want to blacklist or whitelist the application"""
     def user_prompt(self, status, application_name, application_path):

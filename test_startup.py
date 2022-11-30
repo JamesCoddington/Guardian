@@ -2,6 +2,7 @@ import unittest
 import json
 import csv
 from unittest.mock import patch, MagicMock, Mock
+from os.path import isfile
 
 from startup import Guardian
 
@@ -45,6 +46,8 @@ class TestStartup(unittest.TestCase):
     csv.writer = MagicMock()
     csv.writer.writerow = MagicMock()
     self.guardian.check_csv()
+    self.assertTrue(isfile("blacklist_log.csv"))
+    self.assertTrue(isfile("status.json"))
 
 if __name__ == "__main__":
   unittest.main()
