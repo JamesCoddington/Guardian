@@ -1,8 +1,12 @@
 import unittest
 import json
+import sys
 import csv
 from unittest.mock import patch, MagicMock, Mock
 from os.path import isfile
+
+# from ..startup import Guardian
+sys.path.append('..')
 
 from startup import Guardian
 

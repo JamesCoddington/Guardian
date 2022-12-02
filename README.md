@@ -30,15 +30,17 @@ To run Guardian on Windows, follow these steps:
 
 1. Open Powershell and run `pip install psutil`. This installs the utility libraries Guardian uses to monitor your computer's network activity.
 
-2. Navigate to the location of your Guardian installation in your terminal. Run `python startup.py` to start Guardian.
+2. Navigate to the location of your Guardian installation in your terminal. Run `python startup.py` to start Guardian. 
 
 ### Mac
 
 To run Guardian on macOS, follow these steps:
 
-1. Open Terminal and run `pip install psutil` in your terminal. This installs the utility libraries Guardian uses to monitor your computer's network activity.
+1. Open Terminal and run `pip3 install psutil` in your terminal. This installs the utility libraries Guardian uses to monitor your computer's network activity.
 
-2. Navigate to the location of your Guardian installation in your terminal. Run `python startup.py` to start Guardian.
+2. Navigate to the location of your Guardian installation in your terminal. Run `python3 startup.py` to start Guardian.
+
+3. If you get an AccessDenied error you may need to login to your super user. To do this you can try running `sudo python3 startup.py`.
 
 ## Whitelist and blacklist
 
@@ -46,4 +48,4 @@ Guardian uses a whitelist and a blacklist to remember the process that are and a
 
 When a process is added to the whitelist by the user, Guardian will stop notifying the user that the application is access their computer's network. This is useful for routine system processes that need access to the network.
 
-When a process is added to the blacklist by the user, Guardian will log every network connection that process makes. These logs are available in Guardian's `blacklist_logs.csv` file. Each log entry contains the process's application's name and path.
+When a process is added to the blacklist by the user, Guardian will log the location of the app in your files. These logs are available in Guardian's `blacklist_logs.csv` file. Each log entry contains the process's application's name and path.
