@@ -32,6 +32,8 @@ To run Guardian on Windows, follow these steps:
 
 2. Navigate to the location of your Guardian installation in your terminal. Run `python startup.py` to start Guardian. 
 
+3. To exit either close powershell or `ctrl + c`.
+
 ### Mac
 
 To run Guardian on macOS, follow these steps:
@@ -42,6 +44,8 @@ To run Guardian on macOS, follow these steps:
 
 3. If you get an AccessDenied error you may need to login to your super user. To do this you can try running `sudo python startup.py`.
 
+4. To exit either close terminal or `ctrl + c`.
+
 ## Whitelist and blacklist
 
 Guardian uses a whitelist and a blacklist to remember the process that are and aren't allowed to access your computer network. The application keeps track of these applications in `status.json`
@@ -49,3 +53,7 @@ Guardian uses a whitelist and a blacklist to remember the process that are and a
 When a process is added to the whitelist by the user, Guardian will stop notifying the user that the application is access their computer's network. This is useful for routine system processes that need access to the network.
 
 When a process is added to the blacklist by the user, Guardian will log the location of the app in your files. These logs are available in Guardian's `blacklist_logs.csv` file. Each log entry contains the process's application's name and path.
+
+## Testing
+
+There is a [ReadME here](testing/README.md) that explains how to run the tests for Guardian.
