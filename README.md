@@ -18,7 +18,7 @@ The purpose of Guardian is to make the user more aware of the applications makin
 
 Running Guardian requires that Python 3 is installed on your machine and in your system `PATH`.
 
-Your Python installation may expose either a `python` or `python3` command. For simplicity, this guide will use `python`, but you should use the command that works with your machine.
+Your Python installation may expose either a `python` or `python3` (`pip` or `pip3`) command. For simplicity, this guide will use `python`, but you should use the command that works with your machine.
 
 To verify that your machine is ready to run Guardian, launch Terminal and run `python --version`. Ensure Python reports a version >= 3.
 
@@ -36,11 +36,11 @@ To run Guardian on Windows, follow these steps:
 
 To run Guardian on macOS, follow these steps:
 
-1. Open Terminal and run `pip3 install psutil` in your terminal. This installs the utility libraries Guardian uses to monitor your computer's network activity.
+1. Open Terminal and run `pip install psutil` in your terminal. This installs the utility libraries Guardian uses to monitor your computer's network activity.
 
-2. Navigate to the location of your Guardian installation in your terminal. Run `python3 startup.py` to start Guardian.
+2. Navigate to the location of your Guardian installation in your terminal. Run `python startup.py` to start Guardian.
 
-3. If you get an AccessDenied error you may need to login to your super user. To do this you can try running `sudo python3 startup.py`.
+3. If you get an AccessDenied error you may need to login to your super user. To do this you can try running `sudo python startup.py`.
 
 ## Whitelist and blacklist
 
